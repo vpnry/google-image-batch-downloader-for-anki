@@ -1,8 +1,13 @@
 # Google Image Batch Downloader for Anki
 
-This is a folk of the archived [batch-download-pictures-from-google-images](https://github.com/kelciour/batch-download-pictures-from-google-images) by Kelciour.
+To install this add-on for Anki, use the code `511921711`. See also: [https://ankiweb.net/shared/info/511921711](https://ankiweb.net/shared/info/511921711)
 
 Batch download pictures from Google Images for your Anki notes.
+
+Credits:
+
+This is a folk of the archived [batch-download-pictures-from-google-images](https://github.com/kelciour/batch-download-pictures-from-google-images) by Kelciour.
+
 
 ## Features
 - Multiple search queries per note (Word, Definition, Giphy, etc.).
@@ -29,3 +34,19 @@ If you are learning German and want to search for the word "Tee":
 5. Click **Start**.
 
 This ensures Google prioritizes results that are relevant to the German language and region, avoiding English-centric results.
+
+# Dev notes
+
+How to publish a new version:
+
+- Modify the code
+- Log in Anki
+- Visit https://ankiweb.net/shared/upload?id=511921711
+- Upload the addon `.ankiaddon` file
+
+```bash
+
+# cd to this project directory
+zip -r ../google-image-batch-downloader-for-anki.ankiaddon *
+
+```
