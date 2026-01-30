@@ -1,3 +1,5 @@
+![](./example.webp)
+
 # Google Image Batch Downloader for Anki
 
 To install this add-on for Anki, use the code `511921711`. See also: [https://ankiweb.net/shared/info/511921711](https://ankiweb.net/shared/info/511921711)
@@ -25,6 +27,8 @@ To improve the accuracy of your search results, especially for language learning
 | **Language** | Language restriction code (`lr` parameter) | `lang_de` for Deutsch |
 
 ### Example Setup
+
+
 If you are learning German and want to search for the word "Tee":
 
 1. Open the Browser and select your notes.
