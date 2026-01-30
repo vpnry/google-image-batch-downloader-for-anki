@@ -29,7 +29,3 @@ If you are learning German and want to search for the word "Tee":
 5. Click **Start**.
 
 This ensures Google prioritizes results that are relevant to the German language and region, avoiding English-centric results.
-
-## Requirements
-- Anki 2.1.x / 23.x / 24.x / 25.x
-- `requests` and `beautifulsoup4` (usually bundled or pre-installed)
