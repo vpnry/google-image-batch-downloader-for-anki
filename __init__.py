@@ -29,10 +29,11 @@ try:
 except:
     from shutil import which as find_executable
 
+# Handle UI loading for both Qt5 and Qt6
 try:
-    from .designer import form_qt6 as form
-except:
-    from .designer import form_qt5 as form
+    from PyQt6 import uic
+except ImportError:
+    from PyQt5 import uic
 
 # https://github.com/glutanimate/html-cleaner/blob/master/html_cleaner/main.py#L59
 sys.path.append(os.path.join(os.path.dirname(__file__), "vendor"))
@@ -64,8 +65,8 @@ def updateNotes(browser, nids):
     mw = browser.mw
 
     d = QDialog(browser)
-    frm = form.Ui_Dialog()
-    frm.setupUi(d)
+    ui_file = os.path.join(os.path.dirname(__file__), "designer", "form.ui")
+    frm = uic.loadUi(ui_file, d)
 
     config = mw.addonManager.getConfig(__name__)
 
@@ -95,6 +96,8 @@ def updateNotes(browser, nids):
         width = sq.get("Width", -1)
         height = sq.get("Height", 260)
         overwrite = sq.get("Overwrite", "Skip")
+        region = sq.get("Region", "")
+        language = sq.get("Language", "")
 
         # backward compatibility with the previous version
         if overwrite == True:
@@ -116,6 +119,12 @@ def updateNotes(browser, nids):
             combobox.setCurrentIndex(fields.index(fld) + 1)
         frm.gridLayout.addWidget(combobox, i, 2)
 
+        lineEdit = QLineEdit(region)
+        frm.gridLayout.addWidget(lineEdit, i, 3)
+
+        lineEdit = QLineEdit(language)
+        frm.gridLayout.addWidget(lineEdit, i, 4)
+
         spinBox = QSpinBox()
         spinBox.setMinimum(1)
         spinBox.setValue(cnt)
@@ -123,7 +132,7 @@ def updateNotes(browser, nids):
            QSpinBox {
             width: 24;
         }""")
-        frm.gridLayout.addWidget(spinBox, i, 3)
+        frm.gridLayout.addWidget(spinBox, i, 5)
 
         checkBox = QComboBox()
         checkBox.setObjectName("checkBox")
@@ -131,32 +140,32 @@ def updateNotes(browser, nids):
         checkBox.addItem("Overwrite")
         checkBox.addItem("Append")
         checkBox.setCurrentIndex(checkBox.findText(overwrite))
-        frm.gridLayout.addWidget(checkBox, i, 4)
+        frm.gridLayout.addWidget(checkBox, i, 6)
 
         hbox = QHBoxLayout()
-        hbox.addWidget(QLabel("Width:"))
+        hbox.addWidget(QLabel("W:"))
         spinBox = QSpinBox()
         spinBox.setMinimum(-1)
         spinBox.setMaximum(9999)
         spinBox.setValue(width)
         spinBox.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignVCenter)
         hbox.addWidget(spinBox)
-        frm.gridLayout.addLayout(hbox, i, 5)
+        frm.gridLayout.addLayout(hbox, i, 7)
 
         hbox = QHBoxLayout()
-        hbox.addWidget(QLabel("Height:"))
+        hbox.addWidget(QLabel("H:"))
         spinBox = QSpinBox()
         spinBox.setMinimum(-1)
         spinBox.setMaximum(9999)
         spinBox.setValue(height)
         spinBox.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignVCenter)
         hbox.addWidget(spinBox)
-        frm.gridLayout.addLayout(hbox, i, 6)
+        frm.gridLayout.addLayout(hbox, i, 8)
 
     frm.gridLayout.setColumnStretch(1, 1)
     frm.gridLayout.setColumnMinimumWidth(1, 120)
 
-    columns = ["Name:", "Search Query:", "Target Field:", "Count:", "If not empty?", '', '']
+    columns = ["Name:", "Search Query:", "Target Field:", "Region:", "Language:", "Cnt:", "If not empty?", '', '']
     for i, title in enumerate(columns):
         frm.gridLayout.addWidget(QLabel(title), 0, i)
 
@@ -166,7 +175,7 @@ def updateNotes(browser, nids):
     sf = frm.srcField.currentText()
 
     sq = []
-    columns = ["Name", "URL", "Field", "Count", 'Overwrite', 'Width', 'Height']
+    columns = ["Name", "URL", "Field", "Region", "Language", "Count", 'Overwrite', 'Width', 'Height']
     for i in range(1, frm.gridLayout.rowCount()):
         q = {}
         for j in range(frm.gridLayout.columnCount()):
@@ -230,7 +239,7 @@ def updateNotes(browser, nids):
     error_target_field_not_found = 0
     is_consent_error = False
     is_search_error = True
-    mw.checkpoint("Add Google Images")
+    mw.checkpoint("Google Image Batch Downloader for Anki")
     mw.progress.start(immediate=True)
     browser.model.beginReset()
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -418,6 +427,10 @@ def updateNotes(browser, nids):
                             "safe": "active",
                             "tbs": "itp:photo,ic:color,iar:w"
                         }
+                        if q.get("Region"):
+                            payload["gl"] = q["Region"]
+                        if q.get("Language"):
+                            payload["lr"] = q["Language"]
                         r = requests.get("https://www.google.com/search", params=payload, headers=headers, cookies={"CONSENT":"YES+"}, timeout=15)
                         r.raise_for_status()
                         is_search_error = False
@@ -479,7 +492,7 @@ def updateNotes(browser, nids):
     if is_consent_error:
         showText('ERROR: "Before you continue to Google" pop-up', parent=browser)
     elif error_msg:
-        showText(error_msg, title="Batch Download Pictures from Google Images", parent=browser)
+        showText(error_msg, title="Google Image Batch Downloader for Anki", parent=browser)
     else:
         msg = ngettext("Processed %d note.", "Processed %d notes.", len(nids)) % len(nids)
         if error_source_field_not_found > 0:
@@ -504,7 +517,7 @@ def onAddImages(browser):
 def setupMenu(browser):
     menu = browser.form.menuEdit
     menu.addSeparator()
-    a = menu.addAction('Add Google Images')
+    a = menu.addAction('Google Image Batch Downloader for Anki')
     a.triggered.connect(lambda _, b=browser: onAddImages(b))
 
 

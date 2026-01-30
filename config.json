@@ -1,6 +1,6 @@
 {
 	"Source Field": "Front",
-	"Delimiter": " ",
+	"Delimiter": " <br> ",
 	"Search Queries": [
 		{
 			"Name": "Word",
@@ -9,7 +9,9 @@
 			"Count": 1,
 			"Width": -1,
 			"Height": 260,
-			"Overwrite": false
+			"Overwrite": false,
+			"Region": "",
+			"Language": ""
 		},
 		{
 			"Name": "Definition",
@@ -18,7 +20,9 @@
 			"Count": 1,
 			"Width": -1,
 			"Height": 260,
-			"Overwrite": false
+			"Overwrite": false,
+			"Region": "",
+			"Language": ""
 		},
 		{
 			"Name": "Giphy",
@@ -27,7 +31,9 @@
 			"Count": 1,
 			"Width": -1,
 			"Height": 260,
-			"Overwrite": false
+			"Overwrite": false,
+			"Region": "",
+			"Language": ""
 		},
 		{
 			"Name": "Wikipedia",
@@ -36,7 +42,9 @@
 			"Count": 1,
 			"Width": -1,
 			"Height": 260,
-			"Overwrite": false
+			"Overwrite": false,
+			"Region": "",
+			"Language": ""
 		},
 		{
 			"Name": "Wikimedia",
@@ -45,7 +53,9 @@
 			"Count": 1,
 			"Width": -1,
 			"Height": 260,
-			"Overwrite": false
+			"Overwrite": false,
+			"Region": "",
+			"Language": ""
 		},
 		{
 			"Name": "Meme",
@@ -54,7 +64,9 @@
 			"Count": 1,
 			"Width": -1,
 			"Height": 260,
-			"Overwrite": false
+			"Overwrite": false,
+			"Region": "",
+			"Language": ""
 		},
 		{
 			"Name": "Getty Images",
@@ -63,7 +75,9 @@
 			"Count": 1,
 			"Width": -1,
 			"Height": 260,
-			"Overwrite": false
+			"Overwrite": false,
+			"Region": "",
+			"Language": ""
 		},
 		{
 			"Name": "Shutterstock",
@@ -72,7 +86,9 @@
 			"Count": 1,
 			"Width": -1,
 			"Height": 260,
-			"Overwrite": false
+			"Overwrite": false,
+			"Region": "",
+			"Language": ""
 		}
 	]
 }

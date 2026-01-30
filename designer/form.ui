@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Batch Download Pictures From Google Images</string>
+   <string>Google Image Batch Downloader for Anki</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
