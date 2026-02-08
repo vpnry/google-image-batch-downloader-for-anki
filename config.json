@@ -1,6 +1,6 @@
 {
 	"Source Field": "Front",
-	"Delimiter": " <br> ",
+	"Delimiter": " ",
 	"Search Queries": [
 		{
 			"Name": "Word",

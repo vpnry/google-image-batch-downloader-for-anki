@@ -526,8 +526,7 @@ def onAddImages(browser):
 def setupMenu(browser):
     menu = browser.form.menuEdit
     menu.addSeparator()
-    a = menu.addAction('Google Image Batch Downloader for Anki')
+    a = menu.addAction('🖼️ Google Image Batch Downloader for Anki')
     a.triggered.connect(lambda _, b=browser: onAddImages(b))
-
 
 addHook("browser.setupMenus", setupMenu)
